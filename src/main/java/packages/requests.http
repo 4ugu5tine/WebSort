@@ -1,0 +1,24 @@
+### GET request to example server
+GET http://localhost:8080/Web/all
+
+###
+GET http://localhost:8080/Web/sort
+
+###
+
+POST http://localhost:8080/Web/add
+Content-Type: application/json
+
+{
+  "title": "Effective Java",
+  "author": "Joshua Bloch",
+  "copies": 10
+}
+
+###
+POST http://localhost:8080/Web/sort/add
+Content-Type: application/json
+
+{
+
+}

@@ -1,14 +1,15 @@
-package packages;
+package packages.controller;
 import lombok.RequiredArgsConstructor;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.servlet.ModelAndView;
+import packages.model.Book;
+import packages.service.BookService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -32,8 +33,9 @@ public class Controllers {
         return new ResponseEntity<>(books, HttpStatus.FOUND);
     }
 
+
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) throws SQLException {
         Book book = bookService.findById(id);
         if (book == null) {
             throw new RuntimeException("Book not found");
@@ -48,21 +50,28 @@ public class Controllers {
     }
 
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) {
+    @PatchMapping("/{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id, @RequestBody Book bookDetails) throws SQLException {
         Book book = bookService.findById(id);
         if (book == null) {
             throw new RuntimeException("Book not found");
         }
-        book.setTitle(bookDetails.getTitle());
-        book.setAuthor(bookDetails.getAuthor());
+
+        if (!bookDetails.getTitle().isEmpty())
+            book.setTitle(bookDetails.getTitle());
+
+        else if(!bookDetails.getAuthor().isEmpty())
+            book.setAuthor(bookDetails.getAuthor());
+
+        else if((Integer) bookDetails.getCopies() != null )
+            book.setCopies(bookDetails.getCopies());
         bookService.save(book);
 
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) throws SQLException {
         Book book = bookService.findById(id);
         if (book == null) {
             throw new RuntimeException("Book not found");

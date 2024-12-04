@@ -1,7 +1,8 @@
-package packages;
+package packages.service;
 
 
 import org.springframework.stereotype.Service;
+import packages.model.Book;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +12,10 @@ import java.util.Map;
 
 @Service
 public class BookService {
-
     private final Map<Long, Book> books = new HashMap<>();
 
-    private Long idCounter = 3L;
+    private Long idCounter = 1L;
+
     public List<Book> findAll() {
         return new ArrayList<>(books.values());
     }
@@ -34,5 +35,4 @@ public class BookService {
     public void delete(Long id) {
         books.remove(id);
     }
-
 }

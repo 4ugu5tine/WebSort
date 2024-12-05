@@ -1,22 +1,31 @@
-### GET request to example server
+### GET request for all books
 GET http://localhost:8080/Web/all
 
-###
-GET http://localhost:8080/Web/sort
 
-###
+### Get request for a specific book with id provided
+GET http://localhost:8080/Web/1
 
+
+### Post request to add a book
 POST http://localhost:8080/Web/add
 Content-Type: application/json
 
 {
-  "title": "Effective Java",
-  "author": "Joshua Bloch",
+  "title": "Born Sinner",
+  "author": "Kingsley",
   "copies": 10
 }
-###
-GET http://localhost:8080/Web/1
 
-###
-POST http://localhost:8080/Web/sort/add
+### Delete a book using the specified id
+DELETE http://localhost:8080/Web/3
+
+
+### Update the specified book
+PATCH http://localhost:8080/Web/2
 Content-Type: application/json
+
+{
+  "title": "Born Sinner",
+  "author": "Kingsley",
+  "copies": 10
+}
